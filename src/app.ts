@@ -8,16 +8,16 @@ app.post("/users", async (request, reply) => {
   const registerBodySchema = z.object({
     name: z.string(),
     email: z.string().email(),
-    password_hash: z.string().min(6),
+    password: z.string().min(6),
   });
 
-  const { name, email, password_hash } = registerBodySchema.parse(request.body);
+  const { name, email, password } = registerBodySchema.parse(request.body);
 
   await prisma.user.create({
     data: {
       name,
       email,
-      password_hash,
+      password_hash: password,
     },
   });
 
